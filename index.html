@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+
+<style>
+    *{
+        padding: 5px;
+    }
+    .content {
+        width: 960px;
+        margin: auto;
+        background-color: aquamarine;
+        height: 100%;
+        border-radius: 25px;
+    }
+</style>
+
+<body>
+
+    <div class="content">
+
+        <h1>How to use JavaScript to use OpenWeatherMap API using city name.</h1>
+
+        <p>Step 1: The first thing that you need to do to complete this task is to go to the <a href="https://openweathermap.org/">OpenWeatherMap Site</a>  page and create an account so that you can get a special API key that will be unique for your site. Then after you have created an account, you can go to the tab called “API” that is on top and it should bring you to the weather API data options. For this assignment we will click “the Current Weather Data”. This should bring you to a page with API call code on it. This API code and your custom API that you got when you created your account are the make ingredients to call and receive this data when combined.</p>
+
+        <p>Step 2:Your second step is to create some HTML code so that you can enter in a city and have the API fetch the data for that city. To do this you will simply need to create an input and a button. Secondly you are going to want to put in some placeholders using the paragraph that will show the data that you are wanting to grab. The place holders that I created for this are the temp and outside description. If you right click and click inspect you can see what HTML code I am using to make this happen.
+        </p>
+
+        <p>Step 3: Now there is where the JavaScript comes into play. First we will create global variables. Second we can look at the JSON data so that we can see where the data is that we are calling to get. </p>
+
+
+<pre></pre>
+
+        <code>
+            //tempature <br>
+            //global variables selected by class<br>
+            var input = document.querySelector('.input_text');<br>
+            var main = document.querySelector('#name');<br>
+            var temp = document.querySelector('.temp');<br>
+            var desc = document.querySelector('.desc');<br>
+            var clouds = document.querySelector('.clouds');<br>
+            var button = document.querySelector('.submit');<br>
+            <br>
+        </code>
+
+        <p>Step 4:After we have created all the variables now we can use the API call code that we got at the beggining. So what we are going to get is create a function using the fetch call tag and when we enter the city and click the button the fetch call uses the API to get the data that we are calling that you can see right under out API URL</p>
+
+            //on click button to fetch, show, or throw error<br>
+            button.addEventListener('click', function (name) {<br>
+               fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input.value + '&appid=02ee5663f2d547d7b7b6529e7719d55a')<br>
+                  .then(response => response.json())<br>
+                  .then(data => {<br> <br>
+
+                    <p>Step 5: Using the console.log for data we can see the JSON file so we know where we know where and how to grab the data like so: </p> <br>
+
+                     var tempValue = data['main']['temp'];<br>
+                     var nameValue = data['name'];<br>
+                     var descValue = data['weather'][0]['description'];<br>
+                     main.innerHTML = nameValue;<br>
+                     desc.innerHTML = "Desc - " + descValue;<br>
+                     temp.innerHTML = "Temp - " + tempValue;<br>
+                     input.value = "";<br>
+                  })<br><br>
+
+                  <p>Step 6 (optional):This at the bottom is optional but if the API doesn't have the city that you are looking for in its data then you can through in this error message to show the user that it is working but the city is not found.</p>
+                  //alert if city is not found<br>
+                  .catch(err => alert("City Not Found!!!"));<br>
+               alert(jqXHR.status);<br>
+            })<br>
+        
+
+        <h1>Result:</h1>
+              <!-- Universal script for google with developer API key -->
+      <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRTKHVJnWpZvGAEejzfterI1BXjy72Cik&callback=initMap&libraries=&v=weekly"
+      async></script>
+
+      <!--openweathermap-->
+      <div class="main">
+         <div class="header">
+            <h1>Current Weather data, OpenWeatherMap API</h1>
+            <p>Enter city name in input box below to get weather. Example = Tempe</p>
+         </div>
+
+         <div class="input">
+            <input type="text" placeholder="Enter the city" class="input_text">
+            <input type="submit" value="Submit" class="submit">
+         </div>
+      </div>
+
+      <div class="card">
+         <h1 class="name" id="name"></h1>
+         <p class="temp"></p>
+         <p class="clouds"></p>
+         <p class="desc"></p>
+      </div>
+
+    </div>
+
+
+<script>
+      ///////////////////////////tempature
+      //global variables selected by class
+      var input = document.querySelector('.input_text');
+      var main = document.querySelector('#name');
+      var temp = document.querySelector('.temp');
+      var desc = document.querySelector('.desc');
+      var clouds = document.querySelector('.clouds');
+      var button = document.querySelector('.submit');
+
+      //on click button to fetch, show, or throw error
+      button.addEventListener('click', function (name) {
+         fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input.value + '&appid=02ee5663f2d547d7b7b6529e7719d55a')
+            .then(response => response.json())
+            .then(data => {
+               var tempValue = data['main']['temp'];
+               var nameValue = data['name'];
+               var descValue = data['weather'][0]['description'];
+               main.innerHTML = nameValue;
+               desc.innerHTML = "Desc - " + descValue;
+               temp.innerHTML = "Temp - " + tempValue;
+               input.value = "";
+            })
+            //alert if city is not found
+            .catch(err => alert("City Not Found!!!"));
+         alert(jqXHR.status);
+      })
+</script>
+</body>
+</html>
